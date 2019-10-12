@@ -1133,7 +1133,7 @@ int CmdHF14AMfChk(const char *Cmd)
 			return 1;
 		};
 	}
-	
+
 	parseParamTDS(Cmd, 2, &transferToEml, &createDumpFile, &btimeout14a);
 
 	if (singleBlock & createDumpFile) {
@@ -1266,7 +1266,7 @@ int CmdHF14AMfChk(const char *Cmd)
 				PrintAndLog("Command execute timeout");
 			}
 		}
-	} else { 
+	} else {
 		int keyAB = keyType;
 		do {
 			for (uint32_t c = 0; c < keycnt; c += max_keys) {
@@ -1285,6 +1285,7 @@ int CmdHF14AMfChk(const char *Cmd)
 						// For a single block check, SectorsCnt = Sector that contains the block
 						e_sector[SectorsCnt-1].foundKey[(keyAB & 0x01)] = true;  // flag key found
 						e_sector[SectorsCnt-1].Key[(keyAB & 0x01)]      = key64; // Save key data
+
 					}
 				} else {
 					PrintAndLog("Command execute timeout");
@@ -1355,7 +1356,7 @@ int CmdHF14AMfChk(const char *Cmd)
 		fclose(fkeys);
 		PrintAndLog("Found keys have been dumped to file dumpkeys.bin. 0xffffffffffff has been inserted for unknown keys.");
 	}
-    
+
 	free(e_sector);
 	free(keyBlock);
 	PrintAndLog("");
