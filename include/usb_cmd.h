@@ -132,6 +132,7 @@ typedef struct{
 #define CMD_ISO_15693_FIND_AFI                                            0x0315
 #define CMD_ISO_15693_DEBUG                                               0x0316
 #define CMD_LF_SNOOP_RAW_ADC_SAMPLES                                      0x0317
+#define CMD_CSETUID_ISO_15693                                             0x0318
 
 // For Hitag2 transponders
 #define CMD_SNOOP_HITAG                                                   0x0370
@@ -155,7 +156,6 @@ typedef struct{
 #define CMD_EPA_PACE_COLLECT_NONCE                                        0x038A
 #define CMD_EPA_PACE_REPLAY                                               0x038B
 
-#define CMD_ICLASS_READCHECK                                              0x038F
 #define CMD_ICLASS_CLONE                                                  0x0390
 #define CMD_ICLASS_DUMP                                                   0x0391
 #define CMD_SNOOP_ICLASS                                                  0x0392
@@ -196,17 +196,17 @@ typedef struct{
 #define CMD_MIFARE_ACQUIRE_ENCRYPTED_NONCES                               0x0613
 
 #define CMD_MIFARE_READBL                                                 0x0620
-#define CMD_MIFAREU_READBL                                                0x0720
 #define CMD_MIFARE_READSC                                                 0x0621
-#define CMD_MIFAREU_READCARD                                              0x0721
 #define CMD_MIFARE_WRITEBL                                                0x0622
+#define CMD_MIFARE_CHKKEYS                                                0x0623
+#define CMD_MIFARE_PERSONALIZE_UID                                        0x0624
+#define CMD_MIFARE_SNIFFER                                                0x0630
+
+//ultralightC
+#define CMD_MIFAREU_READBL                                                0x0720
+#define CMD_MIFAREU_READCARD                                              0x0721
 #define CMD_MIFAREU_WRITEBL                                               0x0722
 #define CMD_MIFAREU_WRITEBL_COMPAT                                        0x0723
-
-#define CMD_MIFARE_CHKKEYS                                                0x0623
-
-#define CMD_MIFARE_SNIFFER                                                0x0630
-//ultralightC
 #define CMD_MIFAREUC_AUTH                                                 0x0724
 //0x0725 and 0x0726 no longer used 
 #define CMD_MIFAREUC_SETPWD                                               0x0727

@@ -24,10 +24,12 @@
 #include "legicrfsim.h"
 #include "hitag2.h"
 #include "hitagS.h"
+#include "iclass.h"
 #include "iso14443b.h"
 #include "iso15693.h"
 #include "lfsampling.h"
 #include "BigBuf.h"
+#include "mifarecmd.h"
 #include "mifareutil.h"
 #include "mifaresim.h"
 #include "pcf7931.h"
@@ -996,7 +998,7 @@ void UsbPacketReceived(uint8_t *packet, int len)
 	switch(c->cmd) {
 #ifdef WITH_LF
 		case CMD_SET_LF_SAMPLING_CONFIG:
-			setSamplingConfig((sample_config *) c->d.asBytes);
+			setSamplingConfig(c->d.asBytes);
 			break;
 		case CMD_ACQUIRE_RAW_ADC_SAMPLES_125K:
 			cmd_send(CMD_ACK,SampleLF(c->arg[0], c->arg[1]),0,0,0,0);
@@ -1158,8 +1160,13 @@ void UsbPacketReceived(uint8_t *packet, int len)
 		case CMD_READER_ISO_15693:
 			ReaderIso15693(c->arg[0]);
 			break;
+
 		case CMD_SIMTAG_ISO_15693:
 			SimTagIso15693(c->arg[0], c->d.asBytes);
+			break;
+
+		case CMD_CSETUID_ISO_15693:
+			SetTag15693Uid(c->d.asBytes);
 			break;
 #endif
 
@@ -1237,6 +1244,9 @@ void UsbPacketReceived(uint8_t *packet, int len)
 		case CMD_MIFARE_WRITEBL:
 			MifareWriteBlock(c->arg[0], c->arg[1], c->arg[2], c->d.asBytes);
 			break;
+		case CMD_MIFARE_PERSONALIZE_UID:
+			MifarePersonalizeUID(c->arg[0], c->arg[1], c->d.asBytes);
+			break;
 		//case CMD_MIFAREU_WRITEBL_COMPAT:
 			//MifareUWriteBlockCompat(c->arg[0], c->d.asBytes);
 			//break;
@@ -1313,9 +1323,6 @@ void UsbPacketReceived(uint8_t *packet, int len)
 			break;
 		case CMD_ICLASS_WRITEBLOCK:
 			iClass_WriteBlock(c->arg[0], c->d.asBytes);
-			break;
-		case CMD_ICLASS_READCHECK:  // auth step 1
-			iClass_ReadCheck(c->arg[0], c->arg[1]);
 			break;
 		case CMD_ICLASS_READBLOCK:
 			iClass_ReadBlk(c->arg[0]);
